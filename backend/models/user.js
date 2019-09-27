@@ -16,6 +16,11 @@ const userSchema = mongoose.Schema({
   admin: {
     type: Boolean,
     default: false
+  },
+  // Admin needs to activate every user
+  activated: {
+    type: Boolean,
+    default: false
   }
 })
 
