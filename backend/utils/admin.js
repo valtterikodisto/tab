@@ -1,10 +1,10 @@
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
-const createAdmin = async () => {
-  const defaultUsername = 'admin'
-  const defaultPassword = 'admin'
+const defaultUsername = 'admin'
+const defaultPassword = 'admin'
 
+const createAdmin = async () => {
   const saltRounds = 10
   const passwordHash = bcrypt.hashSync(defaultPassword, saltRounds)
 
@@ -15,9 +15,11 @@ const createAdmin = async () => {
     activated: true
   }
 
-  User.create(admin)
-    .then('Admin has been created')
-    .catch(e => console.log('Admin already exists'))
+  return new Promise((resolve, reject) => {
+    User.create(admin)
+      .then(a => resolve(a))
+      .catch(e => reject(e))
+  })
 }
 
-module.exports = { createAdmin }
+module.exports = { createAdmin, defaultUsername }

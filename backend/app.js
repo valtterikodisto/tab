@@ -21,6 +21,12 @@ mongoose
   })
 
 createAdmin()
+  .then(admin => {
+    console.log('Admin created')
+  })
+  .catch(e => {
+    if (e.name === 'ValidationError') console.log('Admin has already been created')
+  })
 
 app.use(cors())
 app.use(bodyParser.json())
