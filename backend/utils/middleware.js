@@ -3,7 +3,9 @@ const unknownEndpoint = (request, response) => {
 }
 
 const errorHandler = (error, request, response, next) => {
-  if (error.name === 'ValidationError') {
+  if (error.errors && error.errors.username && error.errors.username.kind === 'unique') {
+    return response.status(409).json({ error: 'Username already taken' })
+  } else if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
   }
 

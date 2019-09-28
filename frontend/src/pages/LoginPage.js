@@ -1,8 +1,10 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
+import TemplatePage from './TemplatePage'
 import LoginForm from '../components/LoginForm'
 import loginService from '../services/login'
 
-const LoginPage = ({ setUser }) => {
+const LoginPage = ({ user, setUser, logout, history }) => {
   const handleLogin = async (event, username, password, setPassword) => {
     event.preventDefault()
     setPassword('')
@@ -13,6 +15,7 @@ const LoginPage = ({ setUser }) => {
 
       window.localStorage.setItem('tabListUser', JSON.stringify(userWithToken))
       setUser(userWithToken)
+      history.push('/')
     } catch (error) {
       if (error.response.status === 403) {
         // Notify user
@@ -25,10 +28,10 @@ const LoginPage = ({ setUser }) => {
   }
 
   return (
-    <>
+    <TemplatePage user={user} logout={logout}>
       <LoginForm handleSubmit={handleLogin} />
-    </>
+    </TemplatePage>
   )
 }
 
-export default LoginPage
+export default withRouter(LoginPage)

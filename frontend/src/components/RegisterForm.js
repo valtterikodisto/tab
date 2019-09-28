@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import Button from './Button'
 
-const LoginForm = ({ handleSubmit }) => {
+const RegisterForm = ({ handleSubmit }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
 
   return (
-    <div className="container login-form">
+    <div className="container register-form">
       <form
         onSubmit={event => {
-          handleSubmit(event, username, password, setPassword)
+          handleSubmit(event, username, password, setPassword, setPasswordConfirm)
         }}
       >
         <div className="field">
@@ -34,12 +35,23 @@ const LoginForm = ({ handleSubmit }) => {
             />
           </div>
         </div>
+        <div className="field">
+          <div className="control">
+            <label className="label">Toista salasana</label>
+            <input
+              className="input"
+              type="password"
+              onChange={e => setPasswordConfirm(e.target.value)}
+              value={passwordConfirm}
+            />
+          </div>
+        </div>
         <button className="button is-dark" type="submit">
-          Kirjaudu
+          Rekisteröidy
         </button>
       </form>
     </div>
   )
 }
 
-export default LoginForm
+export default RegisterForm
