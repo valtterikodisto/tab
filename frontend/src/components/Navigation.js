@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { ReactCom } from 'react'
 import { Link } from 'react-router-dom'
+import { ReactComponent as Logo } from '../images/logo.svg'
 
 const Navigation = ({ menuActive, toggleMenu, user, logout }) => {
   const navbarAttribute = menuActive ? ' is-active' : ''
@@ -90,12 +91,7 @@ const Navigation = ({ menuActive, toggleMenu, user, logout }) => {
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <div className="navbar-item">
-          <img
-            src="https://bulma.io/images/bulma-logo.png"
-            width="112"
-            height="28"
-            alt="Tab list logo"
-          />
+          <Logo width="100" height="62" alt="Tab list logo" />
         </div>
 
         <div

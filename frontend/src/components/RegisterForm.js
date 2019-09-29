@@ -6,11 +6,13 @@ const RegisterForm = ({ handleSubmit }) => {
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
 
+  const passwordsDiffer = passwordConfirm && passwordConfirm !== password
+
   return (
     <div className="container register-form">
       <form
         onSubmit={event => {
-          handleSubmit(event, username, password, setPassword, setPasswordConfirm)
+          handleSubmit(event, username, password, setPassword, passwordConfirm, setPasswordConfirm)
         }}
       >
         <div className="field">
@@ -43,7 +45,9 @@ const RegisterForm = ({ handleSubmit }) => {
               type="password"
               onChange={e => setPasswordConfirm(e.target.value)}
               value={passwordConfirm}
+              style={passwordsDiffer ? { border: '2px solid red' } : null}
             />
+            {passwordsDiffer ? <small>Salasanat eivät täsmää</small> : null}
           </div>
         </div>
         <button className="button is-dark" type="submit">
