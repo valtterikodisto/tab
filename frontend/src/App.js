@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { setUser } from './reducers/userReducer'
 import LoginPage from './pages/LoginPage'
 import FrontPage from './pages/FrontPage'
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom'
-import 'bulma'
 import RegisterPage from './pages/RegisterPage'
+import UserPage from './pages/UserPage'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import 'bulma'
 
 const App = ({ currentUser, setUser }) => {
   useEffect(() => {
@@ -28,30 +29,9 @@ const App = ({ currentUser, setUser }) => {
           path="/register"
           render={() => (currentUser ? <Redirect to="/" /> : <RegisterPage />)}
         />
+        <Route path="/users" render={() => <UserPage />} />
       </Router>
     </div>
-
-    // <div>
-    //   <Router>
-    //     <Route
-    //       exact
-    //       path="/"
-    //       render={() =>
-    //         user ? <FrontPage user={user} logout={logout} /> : <Redirect to="/login" />
-    //       }
-    //     />
-    //     <Route
-    //       path="/login"
-    //       render={() =>
-    //         user ? <Redirect to="/" /> : <LoginPage user={user} setUser={setUser} logout={logout} />
-    //       }
-    //     />
-    //     <Route
-    //       path="/register"
-    //       render={() => (user ? <Redirect to="/" /> : <RegisterPage user={user} logout={logout} />)}
-    //     />
-    //   </Router>
-    // </div>
   )
 }
 

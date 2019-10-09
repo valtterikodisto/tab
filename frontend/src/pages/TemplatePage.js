@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setUser } from '../reducers/userReducer'
-import { deleteNotification, setNotification } from '../reducers/notificationReducer'
+import { deleteNotification } from '../reducers/notificationReducer'
 import PropTypes from 'prop-types'
 import Navigation from '../components/Navigation'
 import Notification from '../components/Notification'
@@ -13,7 +14,7 @@ const TemplatePage = ({
   notificationText,
   notificationClassName,
   deleteNotification,
-  setNotification
+  history
 }) => {
   const [menuActive, setMenuActive] = useState(false)
   const toggleMenu = () => setMenuActive(!menuActive)
@@ -21,6 +22,7 @@ const TemplatePage = ({
   const logout = () => {
     localStorage.removeItem('tabListUser')
     setUser(null)
+    history.push('/login')
   }
 
   const handleNotificationDelete = () => {
@@ -61,5 +63,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { setUser, deleteNotification, setNotification }
-)(TemplatePage)
+  { setUser, deleteNotification }
+)(withRouter(TemplatePage))

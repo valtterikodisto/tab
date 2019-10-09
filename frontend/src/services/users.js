@@ -1,4 +1,5 @@
 import axios from 'axios'
+import getHeader from '../utils/authConfigHeader'
 const baseUrl = 'http://localhost:3001/api/users'
 
 const register = async (username, password) => {
@@ -7,8 +8,8 @@ const register = async (username, password) => {
 }
 
 const getAll = async () => {
-  const response = await axios.get(baseUrl)
-  return response.users
+  const response = await axios.get(baseUrl, getHeader())
+  return response.data.users
 }
 
 export default { register, getAll }
