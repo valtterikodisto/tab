@@ -1,19 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
+import { setUser } from '../reducers/userReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import { withRouter } from 'react-router-dom'
 import TemplatePage from './TemplatePage'
 import LoginForm from '../components/LoginForm'
 import loginService from '../services/login'
-import Notification from '../components/Notification'
 
-const LoginPage = ({ user, setUser, logout, history }) => {
-  const [notificationText, setNotificationText] = useState('')
-  const [notificationClassName, setNotificationClassName] = useState('')
-
-  const handleNotificationDelete = () => {
-    setNotificationText('')
-    setNotificationClassName('')
-  }
-
+const LoginPage = ({ setUser, setNotification, history }) => {
   const handleLogin = async (event, username, password, setPassword) => {
     event.preventDefault()
     setPassword('')
@@ -27,29 +21,16 @@ const LoginPage = ({ user, setUser, logout, history }) => {
       history.push('/')
     } catch (error) {
       if (error.response.status === 403) {
-        // Notify user
-        setNotificationText('Ylläpitäjä ei ole aktivoinut käyttäjää')
-        setNotificationClassName('is-warning')
-        console.log('Not activated')
+        setNotification('Ylläpitäjä ei ole aktivoinut käyttäjää', 'is-warning')
       } else if (error.response.status === 401) {
-        // Notify user
-        setNotificationText('Käyttäjänimi tai salasana väärin')
-        setNotificationClassName('is-danger')
-        console.log('Invalid username or password')
+        setNotification('Käyttäjänimi tai salasana väärin', 'is-danger')
       }
     }
   }
 
   return (
-    <TemplatePage user={user} logout={logout}>
+    <TemplatePage>
       <div className="container">
-        {notificationText ? (
-          <Notification
-            text={notificationText}
-            className={notificationClassName}
-            handleDelete={handleNotificationDelete}
-          />
-        ) : null}
         <div className="content" style={{ padding: '2em 0' }}>
           <h1 className="title is-3 is-vcentered">Kirjaudu sisään Tablist-tunnuksilla</h1>
         </div>
@@ -59,4 +40,7 @@ const LoginPage = ({ user, setUser, logout, history }) => {
   )
 }
 
-export default withRouter(LoginPage)
+export default connect(
+  null,
+  { setUser, setNotification }
+)(withRouter(LoginPage))

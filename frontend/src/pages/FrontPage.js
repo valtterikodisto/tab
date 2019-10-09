@@ -1,9 +1,9 @@
 import React from 'react'
 import TemplatePage from './TemplatePage'
 
-const FrontPage = ({ user, logout }) => {
+const FrontPage = () => {
   return (
-    <TemplatePage user={user} logout={logout}>
+    <TemplatePage>
       <p>Front page</p>
     </TemplatePage>
   )

@@ -7,3 +7,4 @@
 | 28.9. | 4     | Added Bulma, login page                     |
 | 29.9. | 4     | Navigation, login & register page           |
 |       | 2     | Styled login & register page, notifications |
+| 9.10  | 5     | Refactored to use Redux                     |

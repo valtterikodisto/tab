@@ -2,11 +2,11 @@ import React, { ReactCom } from 'react'
 import { Link } from 'react-router-dom'
 import { ReactComponent as Logo } from '../images/logo.svg'
 
-const Navigation = ({ menuActive, toggleMenu, user, logout }) => {
+const Navigation = ({ menuActive, toggleMenu, currentUser, logout }) => {
   const navbarAttribute = menuActive ? ' is-active' : ''
 
   const navbarStart = () => {
-    if (user) {
+    if (currentUser) {
       return (
         <div className="navbar-start">
           <Link className="navbar-item" to="/">
@@ -54,7 +54,7 @@ const Navigation = ({ menuActive, toggleMenu, user, logout }) => {
   }
 
   const navbarEnd = () => {
-    if (!user) {
+    if (!currentUser) {
       return (
         <div className="navbar-end">
           <div className="navbar-item">
@@ -75,7 +75,7 @@ const Navigation = ({ menuActive, toggleMenu, user, logout }) => {
           <div className="navbar-item">
             <div className="buttons">
               <div className="button is-dark">
-                <strong>{user.username}</strong>
+                <strong>{currentUser.username}</strong>
               </div>
               <button className="button is-light" onClick={logout}>
                 Kirjaudu ulos

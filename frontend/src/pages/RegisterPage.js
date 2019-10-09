@@ -1,19 +1,13 @@
 import React, { useState } from 'react'
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { setNotification } from '../reducers/notificationReducer'
 import TemplatePage from './TemplatePage'
 import RegisterForm from '../components/RegisterForm'
 import userService from '../services/users'
-import Notification from '../components/Notification'
 
-const RegisterPage = ({ user, logout, history }) => {
+const RegisterPage = ({ setNotification, history }) => {
   const [registerFormIsVisible, setRegisterFormIsVisible] = useState(true)
-  const [notificationText, setNotificationText] = useState('')
-  const [notificationClassName, setNotificationClassName] = useState('')
-
-  const handleNotificationDelete = () => {
-    setNotificationText('')
-    setNotificationClassName('')
-  }
 
   const handleRegister = async (
     event,
@@ -28,16 +22,13 @@ const RegisterPage = ({ user, logout, history }) => {
     setPasswordConfirm('')
 
     if (password !== passwordConfirm) {
-      setNotificationText('Salasanat eivät täsmää')
-      setNotificationClassName('is-warning')
+      setNotification('Salasanat eivät täsmää', 'is-warning')
       return
     } else if (!password) {
-      setNotificationText('Salasana ei voi olla tyhjä')
-      setNotificationClassName('is-warning')
+      setNotification('Salasana ei voi olla tyhjä', 'is-warning')
       return
     } else if (username.length < 3) {
-      setNotificationText('Käyttäjänimen tulee olla vähintään 3 merkkiä')
-      setNotificationClassName('is-warning')
+      setNotification('Käyttäjänimen tulee olla vähintään 3 merkkiä', 'is-warning')
       return
     }
 
@@ -46,15 +37,9 @@ const RegisterPage = ({ user, logout, history }) => {
       setRegisterFormIsVisible(false)
     } catch (error) {
       if (error.response.status === 409) {
-        // Notify user
-        setNotificationText('Käyttäjänimi on jo käytössä')
-        setNotificationClassName('is-warning')
-        console.log('Username already exists')
+        setNotification('Käyttäjänimi on jo käytössä', 'is-warning')
       } else {
-        // Notify user
-        setNotificationText('Käyttäjää ei voitu rekisteröidä')
-        setNotificationClassName('is-danger')
-        console.log('Could not register user')
+        setNotification('Käyttäjää ei voitu rekisteröidä', 'is-danger')
       }
     }
   }
@@ -93,19 +78,15 @@ const RegisterPage = ({ user, logout, history }) => {
   }
 
   return (
-    <TemplatePage user={user} logout={logout}>
+    <TemplatePage>
       <div className="container">
-        {notificationText ? (
-          <Notification
-            text={notificationText}
-            className={notificationClassName}
-            handleDelete={handleNotificationDelete}
-          />
-        ) : null}
         {registerFormIsVisible ? registerSection() : successMessage()}
       </div>
     </TemplatePage>
   )
 }
 
-export default withRouter(RegisterPage)
+export default connect(
+  null,
+  { setNotification }
+)(withRouter(RegisterPage))
