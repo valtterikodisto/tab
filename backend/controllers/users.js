@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const userRouter = require('express').Router()
 const User = require('../models/user')
+const { adminOnly } = require('../utils/middleware')
 
 userRouter.post('/', async (request, response, next) => {
   try {
@@ -20,7 +21,7 @@ userRouter.post('/', async (request, response, next) => {
   }
 })
 
-userRouter.get('/', async (request, response) => {
+userRouter.get('/', adminOnly, async (request, response) => {
   const users = await User.find()
   response.json({ users })
 })

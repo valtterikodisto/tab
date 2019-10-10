@@ -8,3 +8,4 @@
 | 29.9. | 4     | Navigation, login & register page           |
 |       | 2     | Styled login & register page, notifications |
 | 9.10  | 5     | Refactored to use Redux                     |
+| 10.10 | 4     | User page & authorization                   |
