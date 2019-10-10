@@ -20,8 +20,8 @@ const UserActivationTab = ({ users, handleAccept, handleDelete }) => {
     }
   }
 
-  const mapUserToBox = () =>
-    users.filter(user => user.activated).map(user => <UserBox user={user} />)
+  const activatedUsers = users.filter(user => user.activated)
+  const mapUserToBox = () => activatedUsers.map(user => <UserBox user={user} />)
 
   const mapUserToActivationBox = () => {
     return users
@@ -43,7 +43,20 @@ const UserActivationTab = ({ users, handleAccept, handleDelete }) => {
             <a>Käyttäjät</a>
           </li>
           <li className={requestsClassName} onClick={handleRequest}>
-            <a>Pyynnöt</a>
+            <a>
+              Pyynnöt
+              <span
+                style={{
+                  margin: '0 5px',
+                  padding: '0 5px',
+                  background: '#8c5e58',
+                  borderRadius: '5px',
+                  color: 'white'
+                }}
+              >
+                {users.length - activatedUsers.length}
+              </span>
+            </a>
           </li>
         </ul>
       </div>

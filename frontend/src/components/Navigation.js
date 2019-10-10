@@ -13,35 +13,15 @@ const Navigation = ({ menuActive, toggleMenu, currentUser, logout }) => {
             Etusivu
           </Link>
 
-          <div className="navbar-item has-dropdown is-hoverable">
-            <Link className="navbar-link" to="/">
-              Asiakkaat
-            </Link>
-            <div className="navbar-dropdown">
-              <Link className="navbar-item" to="/">
-                Asiakaslista
-              </Link>
-              <Link className="navbar-item" to="/">
-                Lisää asiakas
-              </Link>
-            </div>
-          </div>
+          <Link className="navbar-item" to="/customers">
+            Asiakkaat
+          </Link>
 
-          <div className="navbar-item has-dropdown is-hoverable">
-            <Link className="navbar-link" to="/">
-              Järjestöt
-            </Link>
-            <div className="navbar-dropdown">
-              <Link className="navbar-item" to="/">
-                Järjestölista
-              </Link>
-              <Link className="navbar-item" to="/">
-                Lisää järjestö
-              </Link>
-            </div>
-          </div>
+          <Link className="navbar-item" to="/organizations">
+            Järjestöt
+          </Link>
 
-          <Link className="navbar-item" to="/">
+          <Link className="navbar-item" to="/catalog">
             Hinnasto
           </Link>
 

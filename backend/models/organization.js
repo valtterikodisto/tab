@@ -4,7 +4,9 @@ const uniqueValidator = require('mongoose-unique-validator')
 const organizationSchema = mongoose.Schema({
   name: {
     type: String,
-    unique: true
+    minlength: 3,
+    unique: true,
+    required: true
   },
   customers: [
     {
@@ -18,7 +20,8 @@ const organizationSchema = mongoose.Schema({
     validate: {
       validator: Number.isInteger,
       message: 'Maximum tab must be an integer'
-    }
+    },
+    required: true
   }
 })
 

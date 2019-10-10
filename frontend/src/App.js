@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 import FrontPage from './pages/FrontPage'
 import RegisterPage from './pages/RegisterPage'
 import UserPage from './pages/UserPage'
+import OrganizationPage from './pages/OrganizationPage'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 // import 'bulma'
 import './App.scss'
@@ -31,6 +32,7 @@ const App = ({ currentUser, setUser }) => {
           render={() => (currentUser ? <Redirect to="/" /> : <RegisterPage />)}
         />
         <Route path="/users" render={() => <UserPage />} />
+        <Route path="/organizations" render={() => <OrganizationPage />} />
       </Router>
     </div>
   )

@@ -8,6 +8,8 @@ const unknownEndpoint = (request, response) => {
 const errorHandler = (error, request, response, next) => {
   if (error.errors && error.errors.username && error.errors.username.kind === 'unique') {
     return response.status(409).json({ error: 'Username already taken' })
+  } else if (error.errors && error.errors.name && error.errors.name.kind === 'unique') {
+    return response.status(409).json({ error: 'Name already taken' })
   } else if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
   } else if (error.name === 'JsonWebTokenError') {
@@ -29,9 +31,8 @@ const tokenExtractor = (request, response, next) => {
 }
 
 const adminOnly = async (request, response, next) => {
-  const decodedToken = jwt.verify(request.token, process.env.PRIVATE)
-
   try {
+    const decodedToken = jwt.verify(request.token, process.env.PRIVATE)
     const user = await User.findById(decodedToken.id)
     if (!user || !user.admin) {
       throw new Error('User not authorized')
@@ -40,7 +41,7 @@ const adminOnly = async (request, response, next) => {
     request.user = user
     next()
   } catch (error) {
-    response.status(401).json({ error: error.message })
+    next(error)
   }
 }
 
@@ -56,7 +57,7 @@ const userOnly = async (request, response, next) => {
     request.user = user
     next()
   } catch (error) {
-    response.status(401).json({ error: error.message })
+    next(error)
   }
 }
 

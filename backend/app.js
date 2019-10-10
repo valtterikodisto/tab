@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 
 const userRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+const organizationRouter = require('./controllers/organization')
 const middleware = require('./utils/middleware')
 
 const { createAdmin } = require('./utils/admin')
@@ -34,6 +35,7 @@ app.use(middleware.tokenExtractor)
 
 app.use('/api/users', userRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/organization', organizationRouter)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 

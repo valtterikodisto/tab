@@ -10,3 +10,4 @@
 | 9.10  | 5     | Refactored to use Redux                                     |
 | 10.10 | 4     | User page & authorization                                   |
 |       | 4     | Styled page & admin can now accept or decline registrations |
+|       | 5     | Added organization page & admin can now add organizations   |
