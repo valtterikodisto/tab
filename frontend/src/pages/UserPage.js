@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import userService from '../services/users'
 import TemplatePage from './TemplatePage'
+import UserActivationTab from '../components/UserActivationTab'
 
 const UserPage = () => {
   const [users, setUsers] = useState()
@@ -12,18 +13,28 @@ const UserPage = () => {
       .catch(error => console.log(error.message))
   }, [])
 
-  const mapUserToUserBox = () => {
-    console.log(users)
-    if (!users) {
-      return null
-    }
+  const handleAccept = (id, obj) => {
+    const activatedUser = { ...obj, activated: true }
+    userService.update(id, activatedUser).then(updatedUser => {
+      setUsers(users.map(u => (u.id === id ? updatedUser : u)))
+    })
+  }
 
-    return users.map(user => <div key={user.id}>{user.username}</div>)
+  const handleDelete = id => {
+    userService.remove(id).then(() => setUsers(users.filter(u => u.id !== id)))
   }
 
   return (
     <TemplatePage>
-      <div>{mapUserToUserBox()}</div>
+      <div>
+        {users ? (
+          <UserActivationTab
+            users={users}
+            handleAccept={handleAccept}
+            handleDelete={handleDelete}
+          />
+        ) : null}
+      </div>
     </TemplatePage>
   )
 }

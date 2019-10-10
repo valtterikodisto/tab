@@ -34,9 +34,7 @@ const LoginForm = ({ handleSubmit }) => {
             />
           </div>
         </div>
-        <button className="button is-dark" type="submit">
-          Kirjaudu
-        </button>
+        <Button type="submit" text="Kirjaudu" />
       </form>
     </div>
   )

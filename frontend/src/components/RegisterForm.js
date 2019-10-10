@@ -50,9 +50,7 @@ const RegisterForm = ({ handleSubmit }) => {
             {passwordsDiffer ? <small>Salasanat eivät täsmää</small> : null}
           </div>
         </div>
-        <button className="button is-dark" type="submit">
-          Rekisteröidy
-        </button>
+        <Button type="submit" text="Rekisteröidy" />
       </form>
     </div>
   )

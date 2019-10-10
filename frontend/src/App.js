@@ -6,7 +6,8 @@ import FrontPage from './pages/FrontPage'
 import RegisterPage from './pages/RegisterPage'
 import UserPage from './pages/UserPage'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
-import 'bulma'
+// import 'bulma'
+import './App.scss'
 
 const App = ({ currentUser, setUser }) => {
   useEffect(() => {

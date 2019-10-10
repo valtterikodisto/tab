@@ -12,4 +12,14 @@ const getAll = async () => {
   return response.data.users
 }
 
-export default { register, getAll }
+const update = async (id, user) => {
+  const response = await axios.put(`${baseUrl}/${id}`, { user }, getHeader())
+  return response.data.user
+}
+
+const remove = async id => {
+  const response = await axios.delete(`${baseUrl}/${id}`, getHeader())
+  return response.data
+}
+
+export default { register, getAll, update, remove }

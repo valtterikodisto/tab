@@ -26,4 +26,23 @@ userRouter.get('/', adminOnly, async (request, response) => {
   response.json({ users })
 })
 
+userRouter.put('/:id', adminOnly, async (request, response, next) => {
+  try {
+    const user = request.body.user
+    const updatedUser = await User.findByIdAndUpdate(request.params.id, user, { new: true })
+    response.send({ user: updatedUser })
+  } catch (error) {
+    next(error)
+  }
+})
+
+userRouter.delete('/:id', adminOnly, async (request, response, next) => {
+  try {
+    await User.findByIdAndRemove(request.params.id)
+    response.status(204).end()
+  } catch (exception) {
+    next(exception)
+  }
+})
+
 module.exports = userRouter

@@ -1,11 +1,12 @@
 import React from 'react'
 
-const Button = ({ type, text, onClick }) => {
+const Button = ({ type, text, onClick, className }) => {
   const buttonType = type ? type : null
+  const buttonClassName = className ? `button ${className}` : 'button is-primary'
 
   return (
     <>
-      <button type={buttonType} className="button is-dark" onClick={onClick}>
+      <button type={buttonType} className={buttonClassName} onClick={onClick}>
         {text}
       </button>
     </>

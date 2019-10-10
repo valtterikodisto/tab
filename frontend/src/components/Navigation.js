@@ -45,7 +45,7 @@ const Navigation = ({ menuActive, toggleMenu, currentUser, logout }) => {
             Hinnasto
           </Link>
 
-          <Link className="navbar-item" to="/">
+          <Link className="navbar-item" to="/users">
             Käyttäjät
           </Link>
         </div>
