@@ -12,3 +12,4 @@
 |       | 4     | Styled page & admin can now accept or decline registrations |
 |       | 5     | Added organization page & admin can now add organizations   |
 | 11.10 | 2     | Styled organization page & admin can now edit organizations |
+|       | 3     | Backend for customers & customer info box                   |
