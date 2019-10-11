@@ -21,7 +21,7 @@ const UserActivationTab = ({ users, handleAccept, handleDelete }) => {
   }
 
   const activatedUsers = users.filter(user => user.activated)
-  const mapUserToBox = () => activatedUsers.map(user => <UserBox user={user} />)
+  const mapUserToBox = () => activatedUsers.map(user => <UserBox user={user} key={user.id} />)
 
   const mapUserToActivationBox = () => {
     return users
@@ -31,6 +31,7 @@ const UserActivationTab = ({ users, handleAccept, handleDelete }) => {
           user={user}
           handleAccept={() => handleAccept(user.id, user)}
           handleDelete={() => handleDelete(user.id)}
+          key={user.id}
         />
       ))
   }

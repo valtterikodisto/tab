@@ -1,9 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { centToEuro, validateEuro, euroToCent } from '../utils/centEuroConverter'
 
 const OrganizationForm = ({ handleSubmit, handleClose, organization }) => {
-  const [name, setName] = useState(organization ? organization.name : '')
-  const [maxTab, setMaxTab] = useState(organization ? centToEuro(organization.maxTab) : '')
+  useEffect(() => {
+    if (organization) {
+      setName(organization.name)
+      setMaxTab(centToEuro(organization.maxTab))
+    }
+  }, [organization])
+
+  const [name, setName] = useState('')
+  const [maxTab, setMaxTab] = useState('')
 
   const invalidName = name.length > 0 && name.length < 3
   const invalidMaxTab = maxTab.length > 0 && !validateEuro(maxTab)
@@ -11,7 +18,7 @@ const OrganizationForm = ({ handleSubmit, handleClose, organization }) => {
   const onSubmit = async event => {
     event.preventDefault()
     if (!(invalidName || invalidMaxTab)) {
-      handleSubmit({ name, maxTab: euroToCent(maxTab) })
+      handleSubmit({ ...organization, name, maxTab: euroToCent(maxTab) })
     }
   }
 
@@ -57,12 +64,14 @@ const OrganizationForm = ({ handleSubmit, handleClose, organization }) => {
 
         <div className="field is-grouped">
           <div className="control">
-            <button className="button is-primary">Lisää järjestö</button>
+            <button type="submit" className="button is-primary">
+              Tallenna järjestö
+            </button>
           </div>
           <div className="control">
-            <button className="button" onClick={handleClose}>
+            <div className="button" onClick={handleClose}>
               Peruuta
-            </button>
+            </div>
           </div>
         </div>
       </div>

@@ -13,7 +13,8 @@ const add = async (name, maxTab) => {
 }
 
 const update = async (id, organization) => {
-  const response = await axios.post(`${baseUrl}/${id}`, { organization }, getHeader())
+  console.log(`${baseUrl}/${id}`)
+  const response = await axios.put(`${baseUrl}/${id}`, { organization }, getHeader())
   return response.data.organization
 }
 
