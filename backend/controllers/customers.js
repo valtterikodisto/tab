@@ -27,7 +27,7 @@ customerRouter.post('/', adminOnly, async (request, response, next) => {
 })
 
 customerRouter.get('/', userOnly, async (request, response, next) => {
-  const customers = await Customer.find()
+  const customers = await Customer.find().populate('organization', 'name')
   response.send({ customers })
 })
 
@@ -38,6 +38,38 @@ customerRouter.put('/:id', adminOnly, async (request, response, next) => {
       new: true
     })
     response.send({ customer: updatedCustomer })
+  } catch (error) {
+    next(error)
+  }
+})
+
+customerRouter.get('/page/:page', userOnly, async (request, response, next) => {
+  const page = request.params.page
+  const limit = 5
+  const skip = page * limit - limit
+
+  try {
+    const customers = await Customer.find()
+      .setOptions({ skip, limit })
+      .populate('organization', 'name')
+    const hasMore = customers.length === limit
+    response.send({ customers, hasMore })
+  } catch (error) {
+    next(error)
+  }
+})
+
+customerRouter.post('/search', userOnly, async (request, response, next) => {
+  try {
+    const search = request.body.search
+    const keywords = search.split(/\s+/)
+    const firstnameSearch = keywords.map(k => ({ firstname: new RegExp(k, 'i') }))
+    const lastnameSearch = keywords.map(k => ({ lastname: new RegExp(k, 'i') }))
+    const customers = await Customer.find({
+      $or: [...firstnameSearch, ...lastnameSearch]
+    }).populate('organization', 'name')
+
+    response.send({ customers })
   } catch (error) {
     next(error)
   }

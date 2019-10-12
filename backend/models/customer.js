@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator')
 
 const customerSchema = mongoose.Schema({
   firstname: {
@@ -22,7 +21,6 @@ const customerSchema = mongoose.Schema({
   },
   email: {
     type: String,
-    unique: true,
     validate: {
       validator: v => {
         const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
@@ -57,8 +55,6 @@ const customerSchema = mongoose.Schema({
     }
   ]
 })
-
-customerSchema.plugin(uniqueValidator)
 
 customerSchema.set('toJSON', {
   transform: (document, returnedObject) => {
