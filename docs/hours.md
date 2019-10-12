@@ -14,3 +14,4 @@
 | 11.10 | 2     | Styled organization page & admin can now edit organizations |
 |       | 3     | Backend for customers & customer info box                   |
 | 12.10 | 4     | Search + pagination (infinite scroll) & frontend            |
+|       | 8     | Customer can be added, edited and blocked                   |

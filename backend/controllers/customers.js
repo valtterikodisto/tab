@@ -5,21 +5,13 @@ const Customer = require('../models/customer')
 
 customerRouter.post('/', adminOnly, async (request, response, next) => {
   try {
-    const { firstname, lastname, yearOfBirth, email, balance, organizationId } = request.body
+    const customer = request.body.customer
+    const newCustomer = new Customer({ ...customer, balance: customer.balance || 0 })
 
-    const organization = await Organization.findById(organizationId)
-    const newCustomer = new Customer({
-      firstname,
-      lastname,
-      yearOfBirth,
-      email,
-      balance: balance || 0,
-      organization: organization.id
-    })
-
-    const savedCustomer = await newCustomer.save()
-    organization.customers = organization.customers.concat(savedCustomer.id)
-    await organization.save()
+    const customerOrganization = await Organization.findById(customer.organization)
+    const savedCustomer = await newCustomer.save().catch(e => console.log(e))
+    customerOrganization.customers = customerOrganization.customers.concat(savedCustomer.id)
+    await customerOrganization.save()
     response.send({ customer: savedCustomer })
   } catch (error) {
     next(error)
@@ -27,16 +19,32 @@ customerRouter.post('/', adminOnly, async (request, response, next) => {
 })
 
 customerRouter.get('/', userOnly, async (request, response, next) => {
-  const customers = await Customer.find().populate('organization', 'name')
+  const customers = await Customer.find().populate('organization', ['name', 'maxTab'])
   response.send({ customers })
 })
 
 customerRouter.put('/:id', adminOnly, async (request, response, next) => {
   try {
+    const id = request.params.id
     const customer = request.body.customer
-    const updatedCustomer = await Organization.findByIdAndUpdate(request.params.id, customer, {
+    const oldCustomer = await Customer.findById(id)
+
+    const updatedCustomer = await Customer.findByIdAndUpdate(id, customer, {
       new: true
-    })
+    }).populate('organization', 'name')
+
+    if (updatedCustomer.organization.id.toString() !== oldCustomer.organization.toString()) {
+      const oldOrganization = await Organization.findById(oldCustomer.organization)
+      oldOrganization.customers = oldOrganization.customers.filter(
+        c => c.toString() !== oldCustomer.id.toString()
+      )
+      await oldOrganization.save()
+
+      const newOrganization = await Organization.findById(updatedCustomer.organization)
+      newOrganization.customers = newOrganization.customers.concat(id)
+      await newOrganization.save()
+    }
+
     response.send({ customer: updatedCustomer })
   } catch (error) {
     next(error)
@@ -75,13 +83,12 @@ customerRouter.post('/search', userOnly, async (request, response, next) => {
   }
 })
 
-customerRouter.put('/block/:id', adminOnly, async (request, response, next) => {
+customerRouter.post('/block/:id', adminOnly, async (request, response, next) => {
   try {
     const id = request.params.id
-    const date = request.body.date
-    const customer = await Customer.findById(id)
+    const customer = await Customer.findById(id).populate('organization', 'name')
 
-    customer.block = date
+    customer.block = !customer.block
     const blockedCustomer = await customer.save()
     response.send({ customer: blockedCustomer })
   } catch (error) {

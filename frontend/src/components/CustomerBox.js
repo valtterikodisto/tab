@@ -3,7 +3,7 @@ import { centToEuro } from '../utils/centEuroConverter'
 import Button from '../components/Button'
 import ModalCard from './ModalCard'
 
-const CustomerBox = ({ customer }) => {
+const CustomerBox = ({ customer, handleEditOpen, handleBlock }) => {
   const [contactIsOpen, setContactIsOpen] = useState(false)
 
   const handleContactOpen = () => {
@@ -17,6 +17,14 @@ const CustomerBox = ({ customer }) => {
   return (
     <div className="box">
       <div className="has-text-centered">
+        {customer.block ? (
+          <div className="level">
+            <div className="level-item has-text-centered">
+              <strong>Estetty</strong>
+            </div>
+          </div>
+        ) : null}
+
         <strong style={{ paddingRight: '5px' }}>
           {customer.firstname} {customer.lastname}
           {customer.yearOfBirth ? ` (${customer.yearOfBirth})` : ''}
@@ -27,11 +35,32 @@ const CustomerBox = ({ customer }) => {
         <strong className="title is-5">{centToEuro(customer.balance)}€</strong>
       </div>
       <div className="has-text-centered">
-        <Button style={{ margin: '0 5px' }} text="Muokkaa" />
+        <Button
+          style={{ margin: '0 5px' }}
+          text="Muokkaa"
+          onClick={() => handleEditOpen(customer)}
+        />
+
         <Button style={{ margin: '0 5px' }} text="Ostohistoria" />
         {customer.email ? (
           <Button style={{ margin: '0 5px' }} text="Ota yhteyttä" onClick={handleContactOpen} />
         ) : null}
+
+        {customer.block ? (
+          <Button
+            style={{ margin: '0 5px' }}
+            text="Poista esto"
+            className="is-success"
+            onClick={() => handleBlock(customer.id)}
+          />
+        ) : (
+          <Button
+            style={{ margin: '0 5px' }}
+            text="Estä"
+            className="is-danger"
+            onClick={() => handleBlock(customer.id)}
+          />
+        )}
       </div>
 
       <ModalCard
@@ -41,14 +70,6 @@ const CustomerBox = ({ customer }) => {
       >
         <p>Ota yhteyttä: {customer.email}</p>
       </ModalCard>
-
-      {customer.block < Date.now() ? (
-        <div className="level">
-          <div className="level-item has-text-centered">
-            <strong>Estetty</strong>
-          </div>
-        </div>
-      ) : null}
     </div>
   )
 }

@@ -23,7 +23,7 @@ const customerSchema = mongoose.Schema({
     type: String,
     validate: {
       validator: v => {
-        const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+        const emailRegexp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         return emailRegexp.test(v)
       },
       message: 'Invalid email address'
@@ -35,11 +35,7 @@ const customerSchema = mongoose.Schema({
     required: true
   },
   block: {
-    type: Date,
-    validate: {
-      validator: v => v > Date.now(),
-      message: 'Block date must be at least 1 day'
-    }
+    type: Boolean
   },
   balance: {
     type: Number,

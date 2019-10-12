@@ -2,7 +2,10 @@ import React from 'react'
 
 const Search = ({ value, handleChange, placeholder }) => {
   return (
-    <div className="field has-addons">
+    <div className="field has-addons" style={{ margin: '10px 0' }}>
+      <label className="label" style={{ margin: '5px 10px 0 0' }}>
+        Hae:
+      </label>
       <div className="control">
         <input
           className="input"
@@ -11,9 +14,6 @@ const Search = ({ value, handleChange, placeholder }) => {
           value={value}
           onChange={handleChange}
         />
-      </div>
-      <div className="control">
-        <a className="button is-link">Hae</a>
       </div>
     </div>
   )

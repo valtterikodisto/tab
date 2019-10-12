@@ -12,9 +12,9 @@ const getPage = async page => {
   return response.data
 }
 
-const add = async (firstname, lastname, yearOfBirth, email, balance, organizationId) => {
-  const customer = { firstname, lastname, yearOfBirth, email, balance, organizationId }
-  const response = await axios.post(baseUrl, customer, getHeader())
+const add = async customer => {
+  console.log(customer)
+  const response = await axios.post(baseUrl, { customer }, getHeader())
   return response.data.customer
 }
 
@@ -29,7 +29,7 @@ const remove = async id => {
 }
 
 const block = async id => {
-  const response = await axios.put(`${baseUrl}/${id}`, null, getHeader())
+  const response = await axios.post(`${baseUrl}/block/${id}`, {}, getHeader())
   return response.data.customer
 }
 

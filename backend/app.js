@@ -14,7 +14,7 @@ const middleware = require('./utils/middleware')
 const { createAdmin } = require('./utils/admin')
 
 mongoose
-  .connect(config.MONGODB_URI, { useNewUrlParser: true })
+  .connect(config.MONGODB_URI, { useNewUrlParser: true, useFindAndModify: false })
   .then(() => {
     console.log('Connected to MongoDB')
   })

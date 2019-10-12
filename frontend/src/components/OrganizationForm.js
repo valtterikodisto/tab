@@ -19,6 +19,8 @@ const OrganizationForm = ({ handleSubmit, handleClose, organization }) => {
     event.preventDefault()
     if (!(invalidName || invalidMaxTab)) {
       handleSubmit({ ...organization, name, maxTab: euroToCent(maxTab) })
+      setName('')
+      setMaxTab('')
     }
   }
 
