@@ -6,13 +6,20 @@ const Customer = require('../models/customer')
 customerRouter.post('/', adminOnly, async (request, response, next) => {
   try {
     const customer = request.body.customer
+    await checkIfCustomerExists(customer)
+
     const newCustomer = new Customer({ ...customer, balance: customer.balance || 0 })
 
     const customerOrganization = await Organization.findById(customer.organization)
-    const savedCustomer = await newCustomer.save().catch(e => console.log(e))
+    const savedCustomer = await newCustomer.save()
     customerOrganization.customers = customerOrganization.customers.concat(savedCustomer.id)
     await customerOrganization.save()
-    response.send({ customer: savedCustomer })
+
+    const customerToSend = await Customer.findById(savedCustomer.id).populate(
+      'organization',
+      'name'
+    )
+    response.send({ customer: customerToSend })
   } catch (error) {
     next(error)
   }
@@ -27,8 +34,9 @@ customerRouter.put('/:id', adminOnly, async (request, response, next) => {
   try {
     const id = request.params.id
     const customer = request.body.customer
-    const oldCustomer = await Customer.findById(id)
+    await checkIfCustomerExists(customer)
 
+    const oldCustomer = await Customer.findById(id)
     const updatedCustomer = await Customer.findByIdAndUpdate(id, customer, {
       new: true
     }).populate('organization', 'name')
@@ -53,7 +61,7 @@ customerRouter.put('/:id', adminOnly, async (request, response, next) => {
 
 customerRouter.get('/page/:page', userOnly, async (request, response, next) => {
   const page = request.params.page
-  const limit = 5
+  const limit = 10
   const skip = page * limit - limit
 
   try {
@@ -104,5 +112,20 @@ customerRouter.delete('/:id', adminOnly, async (request, response, next) => {
     next(exception)
   }
 })
+
+const checkIfCustomerExists = async customer => {
+  let { firstname, lastname, yearOfBirth, organization } = customer
+  yearOfBirth = !yearOfBirth ? null : yearOfBirth
+
+  const checkedCustomer = await Customer.findOne({
+    $and: [{ firstname }, { lastname }, { yearOfBirth }, { organization }]
+  })
+
+  if (!!checkedCustomer) {
+    const error = new Error('Customer already exists')
+    error.name = 'ValidationError'
+    throw error
+  }
+}
 
 module.exports = customerRouter

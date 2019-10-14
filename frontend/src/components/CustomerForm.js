@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react'
 import Button from '../components/Button'
 import { euroToCent, centToEuro, validateEuro } from '../utils/centEuroConverter'
 
-const CustomerForm = ({ handleSubmit, handleClose, customer, organizations }) => {
+const CustomerForm = ({
+  handleSubmit,
+  handleClose,
+  customer,
+  organizations,
+  handleDeleteButton
+}) => {
   const [organization, setOrganization] = useState('')
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
@@ -64,16 +70,6 @@ const CustomerForm = ({ handleSubmit, handleClose, customer, organizations }) =>
       invalidEmail ||
       !organization
 
-    console.log(
-      !firstname.trim(),
-      !lastname.trim(),
-      !balance,
-      invalidBalance,
-      invalidYearOfBirth,
-      invalidEmail,
-      !organization
-    )
-
     if (invalidInput) return
 
     const newCustomer = customer
@@ -95,7 +91,13 @@ const CustomerForm = ({ handleSubmit, handleClose, customer, organizations }) =>
           balance: euroToCent(balance)
         }
 
+    emptyFields()
     handleSubmit(removeUnnecessaryFields(newCustomer))
+  }
+
+  const handleFormClose = () => {
+    handleClose()
+    emptyFields()
   }
 
   const removeUnnecessaryFields = customer => {
@@ -110,6 +112,15 @@ const CustomerForm = ({ handleSubmit, handleClose, customer, organizations }) =>
       return modifiedCustomer
     }
     return customer
+  }
+
+  const emptyFields = () => {
+    setOrganization('')
+    setFirstname('')
+    setLastname('')
+    setYearOfBirth('')
+    setEmail('')
+    setBalance('')
   }
 
   return (
@@ -198,9 +209,18 @@ const CustomerForm = ({ handleSubmit, handleClose, customer, organizations }) =>
       <div>{makeInvalidMessage(invalidEmail, 'Virheellinen sähköposti')}</div>
 
       <Button style={{ marginRight: '5px' }} type="submit" text="Tallenna" />
-      <div className="button" style={{ marginLeft: '5px' }} onClick={handleClose}>
+      <div className="button" style={{ margin: '0 5px' }} onClick={handleFormClose}>
         Peruuta
       </div>
+      {customer ? (
+        <div
+          style={{ marginLeft: '5px' }}
+          className="button is-danger"
+          onClick={() => handleDeleteButton(customer)}
+        >
+          Poista
+        </div>
+      ) : null}
     </form>
   )
 }

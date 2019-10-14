@@ -10,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import Search from '../components/Search'
 import ModalCard from '../components/ModalCard'
 import CustomerForm from '../components/CustomerForm'
+import CustomerDeleteBox from '../components/CustomerDeleteBox'
 
 const CustomerPage = ({ setNotification }) => {
   const [organizations, setOrganizations] = useState()
@@ -20,6 +21,7 @@ const CustomerPage = ({ setNotification }) => {
 
   const [editOpen, setEditOpen] = useState(false)
   const [addOpen, setAddOpen] = useState(false)
+  const [deleteOpen, setDeleteOpen] = useState(false)
   const [activeCustomer, setActiveCustomer] = useState()
 
   useEffect(() => {
@@ -92,7 +94,7 @@ const CustomerPage = ({ setNotification }) => {
         } else {
           setCustomers(customers.concat(c))
         }
-
+        console.log('added customer', c)
         handleAddClose()
         setNotification(`${c.firstname} ${c.lastname} lisättiin onnistuneesti!`, 'is-primary')
       })
@@ -119,6 +121,37 @@ const CustomerPage = ({ setNotification }) => {
         setNotification('Eston muuttaminen epäonnistui', 'is-danger')
         console.log(e)
       })
+  }
+
+  const handleDeleteButton = customer => {
+    setEditOpen(false)
+    setDeleteOpen(true)
+  }
+
+  console.log(activeCustomer, 'ACTIVE')
+
+  const handleDelete = customer => {
+    customerService
+      .remove(customer.id)
+      .then(() => {
+        handleDeleteClose()
+        setCustomers(customers.filter(c => c.id !== customer.id))
+        setSearchResults(customers.filter(c => c.id !== customer.id))
+        setNotification('Asiakas poistettu', 'is-primary')
+      })
+      .catch(e => {
+        setNotification(
+          `Asiakkaan ${customer.firstname} ${customer.lastname} poistaminen ei onnistunut`,
+          'is-danger'
+        )
+        console.log(e)
+      })
+  }
+
+  const handleDeleteClose = () => {
+    console.log('hell')
+    setActiveCustomer()
+    setDeleteOpen(false)
   }
 
   return (
@@ -174,6 +207,7 @@ const CustomerPage = ({ setNotification }) => {
             handleClose={handleEditClose}
             customer={activeCustomer}
             organizations={organizations}
+            handleDeleteButton={handleDeleteButton}
           />
         </ModalCard>
       ) : null}
@@ -184,6 +218,13 @@ const CustomerPage = ({ setNotification }) => {
           organizations={organizations}
         />
       </ModalCard>
+      {deleteOpen && activeCustomer ? (
+        <CustomerDeleteBox
+          customer={activeCustomer}
+          handleSubmit={handleDelete}
+          handleClose={handleDeleteClose}
+        />
+      ) : null}
     </TemplatePage>
   )
 }
