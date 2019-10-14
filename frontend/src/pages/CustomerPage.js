@@ -94,7 +94,6 @@ const CustomerPage = ({ setNotification }) => {
         } else {
           setCustomers(customers.concat(c))
         }
-        console.log('added customer', c)
         handleAddClose()
         setNotification(`${c.firstname} ${c.lastname} lisättiin onnistuneesti!`, 'is-primary')
       })
@@ -128,15 +127,13 @@ const CustomerPage = ({ setNotification }) => {
     setDeleteOpen(true)
   }
 
-  console.log(activeCustomer, 'ACTIVE')
-
   const handleDelete = customer => {
     customerService
       .remove(customer.id)
       .then(() => {
         handleDeleteClose()
         setCustomers(customers.filter(c => c.id !== customer.id))
-        setSearchResults(customers.filter(c => c.id !== customer.id))
+        setSearchResults(searchResults.filter(c => c.id !== customer.id))
         setNotification('Asiakas poistettu', 'is-primary')
       })
       .catch(e => {
@@ -149,7 +146,6 @@ const CustomerPage = ({ setNotification }) => {
   }
 
   const handleDeleteClose = () => {
-    console.log('hell')
     setActiveCustomer()
     setDeleteOpen(false)
   }
