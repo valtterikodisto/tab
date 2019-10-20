@@ -15,6 +15,16 @@ organizationRouter.post('/', adminOnly, async (request, response, next) => {
   }
 })
 
+organizationRouter.post('/search', async (request, response, next) => {
+  try {
+    const name = request.body.name
+    const organization = await Organization.findOne({ name })
+    response.json({ organization })
+  } catch (error) {
+    next(error)
+  }
+})
+
 organizationRouter.get('/', userOnly, async (request, response, next) => {
   try {
     const organizations = await Organization.find()

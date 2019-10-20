@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { centToEuro, validateEuro, euroToCent } from '../utils/centEuroConverter'
+import useField from '../hooks/useField'
+import { validateOrganizationName, validateEuro } from '../utils/validation'
+import FormField from './FormField'
+import { centToEuro, euroToCent } from '../utils/centEuroConverter'
 
 const OrganizationForm = ({ handleSubmit, handleClose, organization }) => {
+  const { error: nameError, set: setName, ...name } = useField(
+    'text',
+    null,
+    validateOrganizationName
+  )
+  const { error: maxTabError, set: setMaxTab, ...maxTab } = useField('text', validateEuro)
+  const hasErrors = nameError || maxTabError || !name.value || !maxTab.value
+
   useEffect(() => {
     if (organization) {
       setName(organization.name)
@@ -9,19 +20,22 @@ const OrganizationForm = ({ handleSubmit, handleClose, organization }) => {
     }
   }, [organization])
 
-  const [name, setName] = useState('')
-  const [maxTab, setMaxTab] = useState('')
-
-  const invalidName = name.length > 0 && name.length < 3
-  const invalidMaxTab = maxTab.length > 0 && !validateEuro(maxTab)
-
   const onSubmit = async event => {
     event.preventDefault()
-    if (!(invalidName || invalidMaxTab)) {
+    if (!hasErrors) {
       handleSubmit({ ...organization, name, maxTab: euroToCent(maxTab) })
-      setName('')
-      setMaxTab('')
+      clearFields()
     }
+  }
+
+  const onClose = () => {
+    handleClose()
+    clearFields()
+  }
+
+  const clearFields = () => {
+    setName('')
+    setMaxTab('')
   }
 
   return (
@@ -31,15 +45,7 @@ const OrganizationForm = ({ handleSubmit, handleClose, organization }) => {
           <label className="label">Järjestön nimi</label>
           <div className="field has-addons">
             <div className="control">
-              <input
-                className="input"
-                type="text"
-                placeholder="Nimi"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                style={invalidName ? { borderColor: 'red' } : null}
-              />
-              {invalidName ? <small>Nimen tulee olla vähintää 3 merkkiä</small> : null}
+              <FormField placeholder="Nimi" attributes={name} error={nameError} />
             </div>
           </div>
         </div>
@@ -48,30 +54,22 @@ const OrganizationForm = ({ handleSubmit, handleClose, organization }) => {
           <label className="label">Jäsenen maksimivelka</label>
           <div className="field has-addons">
             <div className="control">
-              <input
-                className="input"
-                type="text"
-                placeholder="Maksimivelka"
-                value={maxTab}
-                onChange={e => setMaxTab(e.target.value)}
-                style={invalidMaxTab ? { borderColor: 'red' } : null}
-              />
+              <FormField placeholder="Maksimivelka" attributes={maxTab} error={maxTabError} />
             </div>
             <div className="control">
               <span className="button is-static">€</span>
             </div>
           </div>
-          {invalidMaxTab ? <small>Virheellinen luku</small> : null}
         </div>
 
         <div className="field is-grouped">
           <div className="control">
-            <button type="submit" className="button is-primary">
+            <button type="submit" className="button is-primary" disabled={hasErrors}>
               Tallenna järjestö
             </button>
           </div>
           <div className="control">
-            <div className="button" onClick={handleClose}>
+            <div className="button" onClick={onClose}>
               Peruuta
             </div>
           </div>

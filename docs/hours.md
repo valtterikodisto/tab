@@ -16,3 +16,4 @@
 | 12.10 | 4     | Search + pagination (infinite scroll) & frontend                   |
 |       | 8     | Customer can be added, edited and blocked                          |
 | 13.10 | 3     | Customer can now be deleted (customer deletion box & confirmation) |
+| 19.10 | 3     | Refactored organization form to use useField -hook + validations   |

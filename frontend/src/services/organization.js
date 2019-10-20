@@ -17,4 +17,9 @@ const update = async (id, organization) => {
   return response.data.organization
 }
 
-export default { getAll, add, update }
+const findByName = async name => {
+  const response = await axios.post(`${baseUrl}/search`, { name }, getHeader())
+  return response.data.organization
+}
+
+export default { getAll, add, update, findByName }
