@@ -21,7 +21,7 @@ const Navigation = ({ menuActive, toggleMenu, currentUser, logout }) => {
             Järjestöt
           </Link>
 
-          <Link className="navbar-item" to="/catalog">
+          <Link className="navbar-item" to="/drinks">
             Hinnasto
           </Link>
 

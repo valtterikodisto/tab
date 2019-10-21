@@ -17,11 +17,15 @@ const drinkSchema = mongoose.Schema({
       message: 'Price must be an integer'
     }
   },
+  selected: {
+    type: Boolean,
+    required: true
+  },
   instructions: String
 })
 
 drinkSchema.plugin(uniqueValidator)
-organizationSchema.set('toJSON', {
+drinkSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id

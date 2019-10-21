@@ -13,7 +13,6 @@ const getPage = async page => {
 }
 
 const add = async customer => {
-  console.log(customer)
   const response = await axios.post(baseUrl, { customer }, getHeader())
   return response.data.customer
 }

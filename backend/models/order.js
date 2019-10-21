@@ -9,10 +9,15 @@ const orderSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Customer'
   },
-  drinkAmounts: [
+  drinks: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'DrinkAmount'
+      amount: {
+        type: Number
+      },
+      drink: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Drink'
+      }
     }
   ],
   total: {
