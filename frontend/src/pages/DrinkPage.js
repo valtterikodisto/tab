@@ -58,7 +58,7 @@ const DrinkPage = ({ setNotification }) => {
         setNotification(`Juoma ${updatedDrink.name} päivitettiin onnistuneest`, 'is-primary')
       } else {
         const savedDrink = await drinkService.add(drink)
-        addNewDrink()
+        addNewDrink(savedDrink)
         setNotification(`Juoma ${savedDrink.name} lisättiin onnistuneest`, 'is-primary')
       }
       handleFormClose()
@@ -70,6 +70,7 @@ const DrinkPage = ({ setNotification }) => {
 
   const handleSelect = async drink => {
     const updatedDrink = await drinkService.select(drink.id, drink)
+    setSearchResults(searchResults.map(d => (d.id === updatedDrink.id ? updatedDrink : d)))
 
     if (updatedDrink.selected) {
       setSelectedDrinks(selectedDrinks.concat(updatedDrink))
@@ -94,8 +95,8 @@ const DrinkPage = ({ setNotification }) => {
     setDrinks(drinks.map(d => (d.id === drink.id ? drink : d)))
   }
 
-  const addNewDrink = () => {
-    setHasMoreDrinks(true)
+  const addNewDrink = drink => {
+    setDrinks(drinks.concat(drink))
   }
 
   const mapToDrinkBox = arr => {

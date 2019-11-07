@@ -11,13 +11,8 @@ const orderSchema = mongoose.Schema({
   },
   drinks: [
     {
-      amount: {
-        type: Number
-      },
-      drink: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Drink'
-      }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Drink'
     }
   ],
   total: {

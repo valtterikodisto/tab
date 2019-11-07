@@ -13,7 +13,7 @@ import CustomerForm from '../components/CustomerForm'
 import CustomerDeleteBox from '../components/CustomerDeleteBox'
 
 const CustomerPage = ({ setNotification }) => {
-  const [organizations, setOrganizations] = useState()
+  const [organizations, setOrganizations] = useState([])
   const [customers, setCustomers] = useState([])
   const [searchResults, setSearchResults] = useState([])
   const [hasMoreCustomers, setHasMoreCustomers] = useState(true)

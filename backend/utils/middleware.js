@@ -16,6 +16,8 @@ const errorHandler = (error, request, response, next) => {
     return response.status(401).json({
       error: 'Invalid token'
     })
+  } else if (error.name === 'InsufficientBalance') {
+    return response.status(403).json({ error: error.message })
   }
 
   next(error)

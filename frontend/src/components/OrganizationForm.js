@@ -23,7 +23,7 @@ const OrganizationForm = ({ handleSubmit, handleClose, organization }) => {
   const onSubmit = async event => {
     event.preventDefault()
     if (!hasErrors) {
-      handleSubmit({ ...organization, name, maxTab: euroToCent(maxTab) })
+      handleSubmit({ ...organization, name: name.value, maxTab: euroToCent(maxTab.value) })
       clearFields()
     }
   }

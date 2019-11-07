@@ -23,11 +23,13 @@ export const validateOrganizationName = async name => {
 }
 
 export const validateEuro = euros => {
-  const invalid = Number.isNaN(parseFloat(euros.replace(',', '.')))
-  if (invalid) {
+  const commaReplacedEuros = euros.replace(',', '.')
+  const x = 0
+  if (/^\d*(\.\d{0,2})?$/.test(commaReplacedEuros)) {
+    return ''
+  } else {
     return 'Virheellinen summa'
   }
-  return ''
 }
 
 export const validateDrinkName = async name => {

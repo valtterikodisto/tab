@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ModalCard = ({ children, visible, footerVisible, title, submitText, handleClose }) => {
+const ModalCard = ({ children, visible, closeVisible, title, submitText, handleClose }) => {
   const className = `modal${visible ? ' is-active' : ''}`
 
   return (
@@ -9,17 +9,11 @@ const ModalCard = ({ children, visible, footerVisible, title, submitText, handle
       <div className="modal-card">
         <header className="modal-card-head">
           <p className="modal-card-title">{title}</p>
-          <button className="delete" onClick={handleClose} aria-label="close" />
+          {closeVisible ? (
+            <button className="delete" onClick={handleClose} aria-label="close" />
+          ) : null}
         </header>
         <section className="modal-card-body">{children}</section>
-        {footerVisible ? (
-          <footer className="modal-card-foot">
-            <button className="button is-primary">{submitText}</button>
-            <button className="button" onClick={handleClose}>
-              Peruuta
-            </button>
-          </footer>
-        ) : null}
       </div>
     </div>
   )

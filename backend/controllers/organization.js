@@ -27,7 +27,7 @@ organizationRouter.post('/search', async (request, response, next) => {
 
 organizationRouter.get('/', userOnly, async (request, response, next) => {
   try {
-    const organizations = await Organization.find()
+    const organizations = await Organization.find().populate('customers')
     response.json({ organizations })
   } catch (error) {
     next(error)

@@ -1,0 +1,27 @@
+.autosuggest {
+  input {
+    padding: 10px 20px;
+    width: 100%;
+    border: 2px solid #dddcdc;
+    border-radius: 4px;
+  }
+
+  .react-autosuggest__suggestions-container--open {
+    border: 2px solid #dddcdc;
+    padding: 10px;
+    width: 100%;
+    border-radius: 10px;
+
+    .react-autosuggest__suggestion {
+      font-weight: 600;
+      padding: 0 10px;
+    }
+
+    .react-autosuggest__suggestion--highlighted {
+      color: white;
+      background-color: #19323c;
+      padding: 0 10px;
+      border-radius: 5px;
+    }
+  }
+}

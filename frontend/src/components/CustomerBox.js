@@ -65,6 +65,7 @@ const CustomerBox = ({ customer, handleEditOpen, handleBlock }) => {
 
       <ModalCard
         visible={contactIsOpen}
+        closeVisible={true}
         title={`${customer.firstname} ${customer.lastname}`}
         handleClose={handleContactClose}
       >

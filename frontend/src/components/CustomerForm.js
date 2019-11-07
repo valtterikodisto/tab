@@ -31,7 +31,7 @@ const CustomerForm = ({
   }
 
   useEffect(() => {
-    if (organizations && !organization) {
+    if (organizations.length && !organization) {
       setOrganization(organizations[0].id)
       setBalance(0)
     }
@@ -62,6 +62,7 @@ const CustomerForm = ({
 
   const onSubmit = async event => {
     event.preventDefault()
+
     const invalidInput =
       !firstname.trim() ||
       !lastname.trim() ||
@@ -69,6 +70,8 @@ const CustomerForm = ({
       invalidYearOfBirth ||
       invalidEmail ||
       !organization
+
+    console.log(invalidInput)
 
     if (invalidInput) return
 
@@ -115,7 +118,7 @@ const CustomerForm = ({
   }
 
   const emptyFields = () => {
-    setOrganization('')
+    setOrganization(organizations[0].id)
     setFirstname('')
     setLastname('')
     setYearOfBirth('')
@@ -129,7 +132,7 @@ const CustomerForm = ({
       <div className="field has-addons">
         <div className="control">
           <div className="select">
-            {organizations ? (
+            {organizations.length ? (
               <select
                 value={organization || organizations[0].id}
                 onChange={e => setOrganization(e.target.value)}
