@@ -19,3 +19,4 @@
 | 19.10 | 3     | Refactored organization form to use useField -hook + validations    |
 | 21.10 | 7     | Drinks can be added, modified, searched and selected (front & back) |
 | 7.11  | 7     | Front page can search customers + minor fix                         |
+| 8.11  | 5     | Customers can purchase drinks from front page                       |

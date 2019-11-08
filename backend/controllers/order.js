@@ -33,10 +33,10 @@ orderRouter.post('/', userOnly, async (request, response, next) => {
     }
 
     const savedOrder = await order.save()
-    savedCustomer.orders = savedCustomer.orders.concat(savedOrder)
-    savedCustomer.balance -= total
-    await savedCustomer.save()
-    response.send({ order: savedOrder })
+    savedCustomer.orders = savedCustomer.orders.concat(savedOrder.id)
+    savedCustomer.balance = savedCustomer.balance - total
+    const c = await savedCustomer.save()
+    response.send({ customer: c })
   } catch (error) {
     console.log(error)
     next(error)

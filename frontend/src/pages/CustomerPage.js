@@ -11,6 +11,7 @@ import Search from '../components/Search'
 import ModalCard from '../components/ModalCard'
 import CustomerForm from '../components/CustomerForm'
 import CustomerDeleteBox from '../components/CustomerDeleteBox'
+import PageHeader from '../components/PageHeader'
 
 const CustomerPage = ({ setNotification }) => {
   const [organizations, setOrganizations] = useState([])
@@ -152,7 +153,74 @@ const CustomerPage = ({ setNotification }) => {
 
   return (
     <TemplatePage>
-      <div className="level" style={{ justifyContent: 'center', margin: '2em 0' }}>
+      <div className="container">
+        <PageHeader
+          title="Asiakkaat"
+          buttonText="Lisää asiakas"
+          handleClick={() => setAddOpen(true)}
+        />
+        <div className="columns is-centered">
+          <Search value={search} placeholder={'Etsi asiakas'} handleChange={handleSearchChange} />
+        </div>
+
+        {search ? (
+          <div className="container">
+            {searchResults.map(c => (
+              <CustomerBox
+                customer={c}
+                key={c.id}
+                handleEditOpen={handleEditOpen}
+                handleBlock={handleCustomerBlock}
+              />
+            ))}
+          </div>
+        ) : (
+          <InfiniteScroll pageStart={0} loadMore={loadMoreCustomers} hasMore={hasMoreCustomers}>
+            <div className="container">
+              {customers.map(c => (
+                <CustomerBox
+                  customer={c}
+                  key={c.id}
+                  handleEditOpen={handleEditOpen}
+                  handleBlock={handleCustomerBlock}
+                />
+              ))}
+            </div>
+          </InfiniteScroll>
+        )}
+
+        {activeCustomer ? (
+          <ModalCard
+            visible={editOpen}
+            title={`${activeCustomer.firstname} ${activeCustomer.lastname}`}
+            handleClose={handleEditClose}
+          >
+            <CustomerForm
+              handleSubmit={handleEditSubmit}
+              handleClose={handleEditClose}
+              customer={activeCustomer}
+              organizations={organizations}
+              handleDeleteButton={handleDeleteButton}
+            />
+          </ModalCard>
+        ) : null}
+        <ModalCard visible={addOpen} title="Lisää asiakas" handleClose={handleAddClose}>
+          <CustomerForm
+            handleSubmit={handleAddSubmit}
+            handleClose={handleAddClose}
+            organizations={organizations}
+          />
+        </ModalCard>
+        {deleteOpen && activeCustomer ? (
+          <CustomerDeleteBox
+            customer={activeCustomer}
+            handleSubmit={handleDelete}
+            handleClose={handleDeleteClose}
+          />
+        ) : null}
+      </div>
+
+      {/* <div className="level" style={{ justifyContent: 'center', margin: '2em 0' }}>
         <h1 className="title has-text-centered" style={{ marginBottom: 0, marginRight: '10px' }}>
           Asiakkaat
         </h1>
@@ -220,7 +288,7 @@ const CustomerPage = ({ setNotification }) => {
           handleSubmit={handleDelete}
           handleClose={handleDeleteClose}
         />
-      ) : null}
+      ) : null} */}
     </TemplatePage>
   )
 }

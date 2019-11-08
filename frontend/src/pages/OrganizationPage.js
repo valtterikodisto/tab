@@ -7,6 +7,7 @@ import ModalCard from '../components/ModalCard'
 import OrganizationForm from '../components/OrganizationForm'
 import OrganizationBox from '../components/OrganizationBox'
 import Button from '../components/Button'
+import PageHeader from '../components/PageHeader'
 
 const OrganizationPage = ({ setNotification }) => {
   const [organizations, setOrganizations] = useState()
@@ -100,10 +101,12 @@ const OrganizationPage = ({ setNotification }) => {
         />
       </ModalCard>
       <div className="container">
-        <h1 className="title">Järjestöt</h1>
-        <div>
-          <Button text="Lisää järjestö" onClick={() => handleEdit(null)} />
-        </div>
+        <PageHeader
+          title="Järjestöt"
+          buttonText="Lisää järjestö"
+          handleClick={() => handleEdit(null)}
+        />
+
         {organizations
           ? organizations.map(o => (
               <OrganizationBox organization={o} key={o.id} handleEdit={handleEdit} />

@@ -1,5 +1,10 @@
 import { useState } from 'react'
 
+// Example usage:
+// const { error: nameError, set: setName, ...name } = useField('text', validateDrinkName)
+// With async validation:
+// const { error: nameError, set: setName, ...name } = useField('text', null, validateDrinkName)
+
 const useField = (type, validate, asyncValidate) => {
   const [value, setValue] = useState('')
   const [error, setError] = useState('')
