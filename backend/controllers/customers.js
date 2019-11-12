@@ -2,6 +2,7 @@ const customerRouter = require('express').Router()
 const { adminOnly, userOnly } = require('../utils/middleware')
 const Organization = require('../models/organization')
 const Customer = require('../models/customer')
+const mongoose = require('mongoose')
 
 customerRouter.post('/', adminOnly, async (request, response, next) => {
   try {
@@ -31,8 +32,6 @@ customerRouter.get('/', userOnly, async (request, response, next) => {
 })
 
 customerRouter.put('/:id', adminOnly, async (request, response, next) => {
-  console.log('Editing  customer...')
-
   try {
     const id = request.params.id
     const customer = request.body.customer
@@ -108,7 +107,13 @@ customerRouter.post('/block/:id', adminOnly, async (request, response, next) => 
 
 customerRouter.delete('/:id', adminOnly, async (request, response, next) => {
   try {
-    await Customer.findByIdAndRemove(request.params.id)
+    const { id } = request.params
+
+    const organization = await Organization.findOne({ customers: [id] })
+    organization.customers = organization.customers.filter(c => c.toString() !== id)
+    await organization.save()
+
+    // await Customer.findByIdAndRemove(id)
     response.status(204).end()
   } catch (exception) {
     next(exception)

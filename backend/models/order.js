@@ -15,6 +15,13 @@ const orderSchema = mongoose.Schema({
       ref: 'Drink'
     }
   ],
+  deposit: {
+    type: Number,
+    validate: {
+      validator: Number.isInteger,
+      message: 'Total must be an integer'
+    }
+  },
   total: {
     type: Number,
     required: true,

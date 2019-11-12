@@ -10,7 +10,7 @@ import { validateEuro } from '../utils/validation'
 import FormField from '../components/FormField'
 import { euroToCent, centToEuro } from '../utils/centEuroConverter'
 import Button from '../components/Button'
-import { purchase } from '../services/order'
+import orderService from '../services/order'
 import { setNotification } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 
@@ -106,7 +106,8 @@ const FrontPage = ({ setNotification }) => {
 
   const handlePurchase = () => {
     if (isDisabled()) return
-    purchase(customer, total(), order)
+    orderService
+      .purchase(customer, deposit.value ? euroToCent(deposit.value) : 0, order)
       .then(({ customer }) => {
         setNotification(
           `${customer.firstname} ${customer.lastname} tilaus (${centToEuro(total())}€) tallennettu`,

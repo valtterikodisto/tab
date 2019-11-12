@@ -93,6 +93,7 @@ const DrinkPage = ({ setNotification }) => {
   const addUpdatedDrink = drink => {
     setSelectedDrinks(selectedDrinks.map(d => (d.id === drink.id ? drink : d)))
     setDrinks(drinks.map(d => (d.id === drink.id ? drink : d)))
+    setSearchResults(searchResults.map(d => (d.id === drink.id ? drink : d)))
   }
 
   const addNewDrink = drink => {
