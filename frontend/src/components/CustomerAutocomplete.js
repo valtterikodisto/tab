@@ -4,8 +4,6 @@ import { centToEuro } from '../utils/centEuroConverter'
 
 const CustomerAutocomplete = ({ customers, customer, setCustomer }) => {
   const [customerOptions, setCustomerOptions] = useState(customers)
-  console.log('customer', customer)
-
   useEffect(() => {
     setCustomerOptions(customers)
   }, [customers, customer])

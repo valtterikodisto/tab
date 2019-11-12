@@ -118,7 +118,7 @@ const CustomerForm = ({
   }
 
   const emptyFields = () => {
-    setOrganization(organizations[0].id)
+    setOrganization(organizations[0] && organizations[0].id)
     setFirstname('')
     setLastname('')
     setYearOfBirth('')
@@ -211,7 +211,12 @@ const CustomerForm = ({
       </div>
       <div>{makeInvalidMessage(invalidEmail, 'Virheellinen sähköposti')}</div>
 
-      <Button style={{ marginRight: '5px' }} type="submit" text="Tallenna" />
+      <Button
+        style={{ marginRight: '5px' }}
+        type="submit"
+        text="Tallenna"
+        disabled={!organization}
+      />
       <div className="button" style={{ margin: '0 5px' }} onClick={handleFormClose}>
         Peruuta
       </div>

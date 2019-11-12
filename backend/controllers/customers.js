@@ -31,10 +31,11 @@ customerRouter.get('/', userOnly, async (request, response, next) => {
 })
 
 customerRouter.put('/:id', adminOnly, async (request, response, next) => {
+  console.log('Editing  customer...')
+
   try {
     const id = request.params.id
     const customer = request.body.customer
-    await checkIfCustomerExists(customer)
 
     const oldCustomer = await Customer.findById(id)
     const updatedCustomer = await Customer.findByIdAndUpdate(id, customer, {
@@ -55,6 +56,7 @@ customerRouter.put('/:id', adminOnly, async (request, response, next) => {
 
     response.send({ customer: updatedCustomer })
   } catch (error) {
+    console.log('error:', error)
     next(error)
   }
 })

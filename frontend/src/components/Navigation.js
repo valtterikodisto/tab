@@ -6,7 +6,7 @@ const Navigation = ({ menuActive, toggleMenu, currentUser, logout }) => {
   const navbarAttribute = menuActive ? ' is-active' : ''
 
   const navbarStart = () => {
-    if (currentUser) {
+    if (currentUser && currentUser.admin) {
       return (
         <div className="navbar-start">
           <Link className="navbar-item" to="/">
@@ -54,9 +54,9 @@ const Navigation = ({ menuActive, toggleMenu, currentUser, logout }) => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <div className="button is-dark">
+              <Link className="button is-dark" to="/profile">
                 <strong>{currentUser.username}</strong>
-              </div>
+              </Link>
               <button className="button is-light" onClick={logout}>
                 Kirjaudu ulos
               </button>

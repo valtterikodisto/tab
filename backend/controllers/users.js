@@ -1,12 +1,14 @@
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const userRouter = require('express').Router()
 const User = require('../models/user')
-const { adminOnly } = require('../utils/middleware')
+const { adminOnly, userOnly } = require('../utils/middleware')
+
+const saltRounds = 10
 
 userRouter.post('/', async (request, response, next) => {
   try {
     const body = request.body
-    const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
     const user = new User({
@@ -31,6 +33,28 @@ userRouter.put('/:id', adminOnly, async (request, response, next) => {
     const user = request.body.user
     const updatedUser = await User.findByIdAndUpdate(request.params.id, user, { new: true })
     response.send({ user: updatedUser })
+  } catch (error) {
+    next(error)
+  }
+})
+
+userRouter.put('/password/:id', userOnly, async (request, response) => {
+  try {
+    const { oldPassword, newPassword } = request.body
+    const user = await User.findById(request.params.id)
+
+    const oldPasswordCorrect =
+      user === null ? false : await bcrypt.compare(oldPassword, user.passwordHash)
+
+    if (!oldPasswordCorrect) {
+      return response.status(401).json({ error: 'Could not change password' })
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, saltRounds)
+    user.passwordHash = passwordHash
+
+    await user.save()
+    response.status(204).send()
   } catch (error) {
     next(error)
   }

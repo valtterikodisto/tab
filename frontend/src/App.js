@@ -10,6 +10,7 @@ import CustomerPage from './pages/CustomerPage'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 import './App.scss'
 import DrinkPage from './pages/DrinkPage'
+import ProfilePage from './pages/ProfilePage'
 
 const App = ({ currentUser, setUser }) => {
   useEffect(() => {
@@ -36,6 +37,7 @@ const App = ({ currentUser, setUser }) => {
         <Route path="/organizations" render={() => <OrganizationPage />} />
         <Route path="/customers" render={() => <CustomerPage />} />
         <Route path="/drinks" render={() => <DrinkPage />} />
+        <Route path="/profile" render={() => <ProfilePage />} />
       </Router>
     </div>
   )

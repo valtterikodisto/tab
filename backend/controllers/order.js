@@ -2,6 +2,7 @@ const orderRouter = require('express').Router()
 const { adminOnly, userOnly } = require('../utils/middleware')
 const Order = require('../models/order')
 const Customer = require('../models/customer')
+const Organization = require('../models/organization')
 
 orderRouter.get('/', adminOnly, async (request, response, next) => {
   try {
@@ -16,7 +17,8 @@ orderRouter.post('/', userOnly, async (request, response, next) => {
   try {
     const { customer, drinks, total } = request.body
 
-    const savedCustomer = await Customer.findById(customer.id).populate('organization', 'maxTab')
+    const savedCustomer = await Customer.findById(customer.id)
+    const organization = await Organization.findById(customer.organization)
     const order = new Order({
       date: Date.now(),
       customer: savedCustomer,
@@ -24,7 +26,7 @@ orderRouter.post('/', userOnly, async (request, response, next) => {
       total
     })
 
-    const insufficientBalance = savedCustomer.balance - total < -savedCustomer.organization.maxTab
+    const insufficientBalance = savedCustomer.balance - total < -organization.maxTab
 
     if (insufficientBalance) {
       const error = new Error('Insufficient balance')

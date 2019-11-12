@@ -4,7 +4,7 @@ const uniqueValidator = require('mongoose-unique-validator')
 const organizationSchema = mongoose.Schema({
   name: {
     type: String,
-    minlength: 3,
+    minlength: 2,
     unique: true,
     required: true
   },

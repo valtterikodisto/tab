@@ -90,7 +90,6 @@ const FrontPage = ({ setNotification }) => {
   const total = () => order.reduce((sum, drink) => drink.price + sum, 0) - euroToCent(deposit.value)
   const correctCustomer = () => {
     if (!customer) return true
-    console.log(customer.organization === organization.id)
     return customer.organization === organization.id
   }
 
@@ -100,8 +99,10 @@ const FrontPage = ({ setNotification }) => {
     depositError ||
     insufficientBalance() ||
     (!euroToCent(deposit.value) && !total()) ||
-    !correctCustomer()
-  const insufficientBalance = () => (customer ? total() > customer.balance : false)
+    !correctCustomer() ||
+    customer.block
+  const insufficientBalance = () =>
+    customer && organization ? customer.balance - total() < -organization.maxTab : false
 
   const handlePurchase = () => {
     if (isDisabled()) return

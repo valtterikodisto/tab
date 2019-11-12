@@ -4,7 +4,6 @@ import organizationService from '../services/organization'
 import { connect } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import TemplatePage from './TemplatePage'
-import Button from '../components/Button'
 import CustomerBox from '../components/CustomerBox'
 import InfiniteScroll from 'react-infinite-scroller'
 import Search from '../components/Search'
@@ -219,76 +218,6 @@ const CustomerPage = ({ setNotification }) => {
           />
         ) : null}
       </div>
-
-      {/* <div className="level" style={{ justifyContent: 'center', margin: '2em 0' }}>
-        <h1 className="title has-text-centered" style={{ marginBottom: 0, marginRight: '10px' }}>
-          Asiakkaat
-        </h1>
-        <Button
-          style={{ marginLeft: '10px' }}
-          text="Lisää asiakas"
-          onClick={() => setAddOpen(true)}
-        />
-      </div>
-      <div className="columns is-centered">
-        <Search value={search} placeholder={'Etsi asiakas'} handleChange={handleSearchChange} />
-      </div>
-
-      {search ? (
-        <div className="container">
-          {searchResults.map(c => (
-            <CustomerBox
-              customer={c}
-              key={c.id}
-              handleEditOpen={handleEditOpen}
-              handleBlock={handleCustomerBlock}
-            />
-          ))}
-        </div>
-      ) : (
-        <InfiniteScroll pageStart={0} loadMore={loadMoreCustomers} hasMore={hasMoreCustomers}>
-          <div className="container">
-            {customers.map(c => (
-              <CustomerBox
-                customer={c}
-                key={c.id}
-                handleEditOpen={handleEditOpen}
-                handleBlock={handleCustomerBlock}
-              />
-            ))}
-          </div>
-        </InfiniteScroll>
-      )}
-
-      {activeCustomer ? (
-        <ModalCard
-          visible={editOpen}
-          title={`${activeCustomer.firstname} ${activeCustomer.lastname}`}
-          handleClose={handleEditClose}
-        >
-          <CustomerForm
-            handleSubmit={handleEditSubmit}
-            handleClose={handleEditClose}
-            customer={activeCustomer}
-            organizations={organizations}
-            handleDeleteButton={handleDeleteButton}
-          />
-        </ModalCard>
-      ) : null}
-      <ModalCard visible={addOpen} title="Lisää asiakas" handleClose={handleAddClose}>
-        <CustomerForm
-          handleSubmit={handleAddSubmit}
-          handleClose={handleAddClose}
-          organizations={organizations}
-        />
-      </ModalCard>
-      {deleteOpen && activeCustomer ? (
-        <CustomerDeleteBox
-          customer={activeCustomer}
-          handleSubmit={handleDelete}
-          handleClose={handleDeleteClose}
-        />
-      ) : null} */}
     </TemplatePage>
   )
 }

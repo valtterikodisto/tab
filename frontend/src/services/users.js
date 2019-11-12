@@ -22,4 +22,13 @@ const remove = async id => {
   return response.data
 }
 
-export default { register, getAll, update, remove }
+const changePassword = async (id, oldPassword, newPassword) => {
+  const response = await axios.put(
+    `${baseUrl}/password/${id}`,
+    { oldPassword, newPassword },
+    getHeader()
+  )
+  return response.data
+}
+
+export default { register, getAll, update, changePassword, remove }

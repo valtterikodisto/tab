@@ -7,6 +7,7 @@ organizationRouter.post('/', adminOnly, async (request, response, next) => {
     const name = request.body.name
     const maxTab = request.body.maxTab
     const organization = new Organization({ name, maxTab })
+    console.log('new org:', organization)
 
     const savedOrganization = await organization.save()
     response.json({ organization: savedOrganization })

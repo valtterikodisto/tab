@@ -7,8 +7,8 @@ Otherwise return an empty string.
 */
 
 export const validateOrganizationName = async name => {
-  if (name.length < 3) {
-    return 'Nimen tulee olla vähintään 3 merkkiä'
+  if (name.length < 2) {
+    return 'Nimen tulee olla vähintään 2 merkkiä'
   }
 
   try {

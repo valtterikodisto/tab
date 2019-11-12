@@ -6,7 +6,6 @@ import TemplatePage from './TemplatePage'
 import ModalCard from '../components/ModalCard'
 import OrganizationForm from '../components/OrganizationForm'
 import OrganizationBox from '../components/OrganizationBox'
-import Button from '../components/Button'
 import PageHeader from '../components/PageHeader'
 
 const OrganizationPage = ({ setNotification }) => {
@@ -25,16 +24,11 @@ const OrganizationPage = ({ setNotification }) => {
 
   const handleOrganizationFormSubmit = async organization => {
     const { name, maxTab } = organization
-    if (!name || name.length < 3 || maxTab === null) {
-      return
-    }
-
-    console.log(organization)
 
     if (organization.id) {
       updateOrganization(organization)
     } else {
-      addOrganization(organization)
+      addOrganization({ name, maxTab })
     }
   }
 
