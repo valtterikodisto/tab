@@ -21,4 +21,4 @@
 | 7.11  | 7     | Front page can search customers + minor fix                         |
 | 8.11  | 5     | Customers can purchase drinks from front page                       |
 | 12.11 | 5     | Profile page (password change), bug fix                             |
-| 12.11 | ?     | Customer order history + fixed customer delete bug                  |
+| 12.11 | 5     | Customer order history + fixed customer delete bug                  |
