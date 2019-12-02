@@ -1,6 +1,6 @@
 import axios from 'axios'
 import getHeader from '../utils/authConfigHeader'
-const baseUrl = 'http://localhost:3001/api/organization'
+const baseUrl = '/api/organization'
 
 const getAll = async () => {
   const response = await axios.get(baseUrl, getHeader())

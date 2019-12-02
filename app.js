@@ -35,6 +35,7 @@ createAdmin()
 app.use(cors())
 app.use(bodyParser.json())
 app.use(middleware.tokenExtractor)
+app.use(express.static('build'))
 
 app.use('/api/users', userRouter)
 app.use('/api/login', loginRouter)

@@ -22,3 +22,4 @@
 | 8.11  | 5     | Customers can purchase drinks from front page                       |
 | 12.11 | 5     | Profile page (password change), bug fix                             |
 | 12.11 | 5     | Customer order history + fixed customer delete bug                  |
+| 2.12  | 5     | Info box for drinks + ready for heroku                              |

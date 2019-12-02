@@ -1,6 +1,6 @@
 import axios from 'axios'
 import getHeader from '../utils/authConfigHeader'
-const baseUrl = 'http://localhost:3001/api/users'
+const baseUrl = '/api/users'
 
 const register = async (username, password) => {
   const response = await axios.post(baseUrl, { username, password })

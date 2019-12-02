@@ -1,6 +1,6 @@
 import axios from 'axios'
 import getHeader from '../utils/authConfigHeader'
-const baseUrl = 'http://localhost:3001/api/orders'
+const baseUrl = '/api/orders'
 
 const purchase = async (customer, deposit, drinks) => {
   const response = await axios.post(baseUrl, { customer, deposit, drinks }, getHeader())
