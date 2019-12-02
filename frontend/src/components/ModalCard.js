@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ModalCard = ({ children, visible, closeVisible, title, submitText, handleClose }) => {
+const ModalCard = ({ children, visible, closeVisible, title, handleClose }) => {
   const className = `modal${visible ? ' is-active' : ''}`
 
   return (

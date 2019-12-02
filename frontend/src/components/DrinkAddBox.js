@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ModalCard from './ModalCard'
+import ReactMarkdown from 'react-markdown'
 import { centToEuro } from '../utils/centEuroConverter'
 
 const style = {
@@ -16,9 +18,28 @@ const style = {
 const substractStyle = { ...style, backgroundColor: '#f2545b' }
 
 function DrinkAddBox({ drink, handleAdd, handleSubstract }) {
+  const [infoOpen, setInfoOpen] = useState(false)
+
+  const infoButton = () => {
+    if (!drink.instructions) {
+      return null
+    }
+
+    return (
+      <button
+        className="button is-secondary is-small"
+        style={{ margin: '1em 0' }}
+        onClick={() => setInfoOpen(true)}
+      >
+        INFO
+      </button>
+    )
+  }
+
   return (
     <div className="box has-text-centered">
-      {`${drink.name} ${centToEuro(drink.price)}€`}
+      <p>{`${drink.name} ${centToEuro(drink.price)}€`} </p>
+      {infoButton()}
       <div>
         <button style={style} onClick={() => handleAdd(drink)}>
           +
@@ -27,6 +48,15 @@ function DrinkAddBox({ drink, handleAdd, handleSubstract }) {
           -
         </button>
       </div>
+
+      <ModalCard
+        title={`Ohje: ${drink.name}`}
+        visible={infoOpen}
+        closeVisible={true}
+        handleClose={() => setInfoOpen(false)}
+      >
+        <ReactMarkdown source={drink.instructions} escapeHtml={false} />
+      </ModalCard>
     </div>
   )
 }
