@@ -109,11 +109,12 @@ customerRouter.delete('/:id', adminOnly, async (request, response, next) => {
   try {
     const { id } = request.params
 
-    const organization = await Organization.findOne({ customers: [id] })
+    const customer = Customer.findById(id)
+    const organization = await Organization.findById(customer.organization)
     organization.customers = organization.customers.filter(c => c.toString() !== id)
     await organization.save()
 
-    // await Customer.findByIdAndRemove(id)
+    await Customer.findByIdAndRemove(id)
     response.status(204).end()
   } catch (exception) {
     next(exception)
