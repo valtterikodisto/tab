@@ -109,8 +109,8 @@ customerRouter.delete('/:id', adminOnly, async (request, response, next) => {
   try {
     const { id } = request.params
 
-    const customer = Customer.findById(id)
-    const organization = await Organization.findById(customer.organization)
+    const customer = await Customer.findById(id)
+    const organization = await Organization.findById(customer.organization._id)
     organization.customers = organization.customers.filter(c => c.toString() !== id)
     await organization.save()
 
