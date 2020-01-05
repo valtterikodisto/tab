@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  tab:
+    image: valtterikodisto/tab
+    build: .
+    ports:
+      - 3001:3001
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/tab
+      # Change PRIVATE
+      - PRIVATE=GOLp1K9j9izv6EpKUqAEuaNtwWycUcATjfeOn4FxCyV-dPDSAwHsrObuwIFySS38xxOawfr0nTLWZDDsJN7EW0-kZAvqs-JYs2vd2RisqIsDuPkyJlVIautgyoOUSTtwlPB5Bl0DiNOpQFEMOKQCt3wK-m6UnXrbeQIkJVdtmD4POR8FL257wDaXdh_u6e1-ORlM6CGpyg90E00YBeppMjFBiGqQ8cDz6FXABVo3p24HW9QZ4auFRyU5UX6GTRapB6NyglqJ7vd2vcaOBNW8IG3w8fQ_1nKsy9x2T4DhV-GwuKnoKBwPm1ntQBXKIjGygIcm60NnKRYmCGHZTayzJQ
+    depends_on:
+      - mongo
+    container_name: tab-application
+
+  mongo:
+    image: mongo:4.2.2
+    volumes:
+      - /opt/tab/data/db:/data/db
+    container_name: tab-db
