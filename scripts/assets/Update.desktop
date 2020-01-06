@@ -6,6 +6,6 @@ Type=Application
 Terminal=true
 Icon[en_US]=/opt/tab/scripts/assets/refresh-button.svg
 Name[en_US]=Update
-Exec=bash -c /home/$USER/Tab/scripts/update.sh
+Exec=bash -c /opt/tab/scripts/update.sh
 Name=Update
 Icon=/opt/tab/scripts/assets/refresh-button.svg

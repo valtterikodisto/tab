@@ -6,9 +6,9 @@ RESETCOLOR="\033[0m"
 PROJECT_ROOT="/opt/tab"
 cd $PROJECT_ROOT
 
-git remote update
-LOCAL=$(git rev-parse HEAD)
-REMOTE=$(git rev-parse @{u})
+sudo git remote update
+LOCAL=$(sudo git rev-parse HEAD)
+REMOTE=$(sudo git rev-parse @{u})
 
 prompt_exit() {
   read -r -p "Paina ENTER poistuaksesi" _
