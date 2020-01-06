@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Icon[en_US]=/opt/tab/frontend/src/images/logo.svg
+Name[en_US]=Tab
+Exec=bash -c /opt/tab/scripts/start.sh
+Name=Tab
+Icon=/opt/tab/frontend/src/images/logo.svg
