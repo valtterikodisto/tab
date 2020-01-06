@@ -21,6 +21,7 @@ mongoose
     console.log('Connected to MongoDB')
   })
   .catch(error => {
+    console.log('MONGODB_URI:', config.MONGODB_URI)
     console.log('Could not connect to MongoDB', error.message)
   })
 
