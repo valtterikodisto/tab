@@ -34,7 +34,9 @@ customerRouter.get('/', userOnly, async (request, response, next) => {
 customerRouter.put('/:id', adminOnly, async (request, response, next) => {
   try {
     const id = request.params.id
-    const customer = request.body.customer
+    const { yearOfBirth, email, ...customer } = request.body.customer
+    customer.yearOfBirth = yearOfBirth || null
+    customer.email = email || null
 
     const oldCustomer = await Customer.findById(id)
     const updatedCustomer = await Customer.findByIdAndUpdate(id, customer, {

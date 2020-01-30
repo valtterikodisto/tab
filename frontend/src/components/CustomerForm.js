@@ -104,7 +104,7 @@ const CustomerForm = ({
   }
 
   const removeUnnecessaryFields = customer => {
-    if (!customer.yearOfBirth && !customer.emai) {
+    if (!customer.yearOfBirth && !customer.email) {
       const { yearOfBirth, email, ...modifiedCustomer } = customer
       return modifiedCustomer
     } else if (!customer.yearOfBirth) {

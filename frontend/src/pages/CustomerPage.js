@@ -222,7 +222,4 @@ const CustomerPage = ({ setNotification }) => {
   )
 }
 
-export default connect(
-  null,
-  { setNotification }
-)(CustomerPage)
+export default connect(null, { setNotification })(CustomerPage)
