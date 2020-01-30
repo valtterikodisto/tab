@@ -7,7 +7,7 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "nodemon index.js",
-    "build:ui": "npm install && rm -rf build && cd frontend && npm run build --prod && cp -r build ../",
+    "build:ui": "rm -rf build && cd frontend && npm install && npm run build --prod && cp -r build ../",
     "deploy": "git push heroku master",
     "heroku-postbuild": "npm run build:ui"
   },
