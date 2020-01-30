@@ -25,3 +25,5 @@
 | 2.12  | 5     | Info box for drinks + ready for heroku                              |
 | 5.1   | 4     | Dockerfiles, docker-compose                                         |
 | 6.1   | 6     | Installation, backup, restore scripts, shortcut icons               |
+| 30.1  | 2     | Documentation, gifs                                                 |
+| TOTAL | 105   |                                                                     |
