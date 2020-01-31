@@ -28,3 +28,7 @@ Every drink must have a unique name and price that is greater than or equal to 0
 ## Ordering
 
 ![Ordering gif](./gif/ordering.gif)
+
+## Changing password
+
+![Ordering gif](./gif/changing-password.gif)
