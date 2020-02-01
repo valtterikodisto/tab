@@ -7,7 +7,6 @@ organizationRouter.post('/', adminOnly, async (request, response, next) => {
     const name = request.body.name
     const maxTab = request.body.maxTab
     const organization = new Organization({ name, maxTab })
-    console.log('new org:', organization)
 
     const savedOrganization = await organization.save()
     response.json({ organization: savedOrganization })
@@ -37,7 +36,7 @@ organizationRouter.get('/', userOnly, async (request, response, next) => {
 
 organizationRouter.put('/:id', adminOnly, async (request, response, next) => {
   try {
-    const organization = request.body.organization
+    const { customers, ...organization } = request.body.organization
     const updatedOrganization = await Organization.findByIdAndUpdate(
       request.params.id,
       organization,
