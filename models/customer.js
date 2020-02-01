@@ -15,7 +15,7 @@ const customerSchema = mongoose.Schema({
     type: Number,
     min: 1900,
     validate: {
-      validator: Number.isInteger,
+      validator: v => Number.isInteger(v) || !v,
       message: 'Year of birth must be an integer and minimum of 1900'
     }
   },
@@ -24,7 +24,7 @@ const customerSchema = mongoose.Schema({
     validate: {
       validator: v => {
         const emailRegexp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        return emailRegexp.test(v)
+        return emailRegexp.test(v) || !v
       },
       message: 'Invalid email address'
     }
