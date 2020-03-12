@@ -10,6 +10,10 @@ Demo for the app can be found [here](https://tab-list.herokuapp.com/)
 
 Instructions for the app can be found [here](./docs/instructions.md)
 
+## Hours
+
+Hours can be found [here](./docs/hours.md)
+
 ## Purchase in the app
 
 ![Ordering gif](./docs/gif/ordering.gif)
